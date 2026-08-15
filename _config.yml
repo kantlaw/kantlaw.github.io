@@ -1,0 +1,23 @@
+title: "Kant — AI Red Team"
+tagline: "AI red team · offensive security"
+description: "AI red team and offensive security. Research on prompt injection, excessive agency, and the trust boundary between instructions and data in LLM systems."
+url: "https://kantlaw.github.io"
+baseurl: ""
+lang: en
+
+# Cada writeup queda en /research/<nombre>/
+permalink: /research/:title/
+
+plugins:
+  - jekyll-feed
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

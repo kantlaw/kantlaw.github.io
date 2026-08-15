@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<article class="sec">
+  <div class="post-head">
+    <a class="back" href="{{ '/#research' | relative_url }}">← Research</a>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}<p class="lede">{{ page.description }}</p>{% endif %}
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>
+      {% for tag in page.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+    </p>
+  </div>
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+
+  {% if page.source %}
+    <p><a class="link" href="{{ page.source }}">Source and tooling on GitHub →</a></p>
+  {% endif %}
+
+  <p><a class="back" href="{{ '/#research' | relative_url }}">← Back to research</a></p>
+</article>

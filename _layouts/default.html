@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% assign p_title = page.title | default: site.title %}
+{% assign p_desc  = page.description | default: site.description %}
+{% assign p_url   = page.url | absolute_url %}
+
+<title>{% if page.title and page.layout == 'post' %}{{ page.title }} — Kant{% else %}{{ site.title }}{% endif %}</title>
+<meta name="description" content="{{ p_desc | strip_html | escape }}">
+
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ p_url }}">
+<meta property="og:title" content="{% if page.layout == 'post' %}{{ page.title }} — Kant{% else %}{{ site.title }}{% endif %}">
+<meta property="og:description" content="{{ p_desc | strip_html | escape }}">
+<!-- Si mueves la página a un dominio propio, cambia `url` en _config.yml y esta ruta -->
+<meta property="og:image" content="{{ '/og.png' | absolute_url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="kant — AI red team, offensive security">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if page.layout == 'post' %}{{ page.title }} — Kant{% else %}{{ site.title }}{% endif %}">
+<meta name="twitter:description" content="{{ p_desc | strip_html | escape }}">
+<meta name="twitter:image" content="{{ '/og.png' | absolute_url }}">
+
+<meta name="theme-color" content="#101017" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F1E9" media="(prefers-color-scheme: light)">
+<link rel="canonical" href="{{ p_url }}">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101017'/%3E%3Crect x='6' y='9' width='4' height='14' fill='%23E9E3D7'/%3E%3Crect x='12' y='9' width='4' height='14' fill='%23E9E3D7'/%3E%3Crect x='20' y='9' width='6' height='14' fill='%23D9A441'/%3E%3C/svg%3E">
+<link rel="alternate" type="application/atom+xml" href="{{ '/feed.xml' | absolute_url }}" title="{{ site.title }}">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="page">
+
+  <header class="rail">
+    <div class="identity">
+      <a href="{{ '/' | relative_url }}" aria-label="Home">
+        <svg viewBox="0 0 190 60" role="img" aria-label="kant">
+          <text x="0" y="56" textLength="150" lengthAdjust="spacingAndGlyphs"
+                font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+                font-size="56" font-weight="600" fill="currentColor">kant</text>
+          <rect x="160" y="20" width="28" height="36" fill="#D9A441"/>
+        </svg>
+      </a>
+      <p class="tagline">AI red team <span class="dot">·</span> offensive security</p>
+    </div>
+
+    <nav class="nav" aria-label="Sections">
+      <ul>
+        <li><a href="{{ '/#thesis' | relative_url }}">Thesis</a></li>
+        <li><a href="{{ '/#research' | relative_url }}">Research</a></li>
+        <li><a href="{{ '/#lab' | relative_url }}">Lab</a></li>
+        <li><a href="{{ '/#about' | relative_url }}">About</a></li>
+        <li><a href="{{ '/#credentials' | relative_url }}">Credentials</a></li>
+        <li><a href="{{ '/#contact' | relative_url }}">Contact</a></li>
+      </ul>
+    </nav>
+
+    <dl class="status">
+      <dt>Now</dt>
+      <dd>HTB AI Red Teamer path — in progress</dd>
+      <dd>HTB Web Penetration Tester — 20 of 20 modules</dd>
+      <dd>PortSwigger Web LLM Attacks — 30 of 30 labs</dd>
+    </dl>
+  </header>
+
+  <main id="main">
+    {{ content }}
+    <footer>© {{ 'now' | date: "%Y" }} Kant</footer>
+  </main>
+</div>
+
+<script>
+  /* Marca el enlace de navegación de la sección visible. Solo en la home. */
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+    var secs  = document.querySelectorAll('.sec');
+    if (!links.length || !secs.length || !('IntersectionObserver' in window)) return;
+
+    var map = {};
+    links.forEach(function (a) {
+      var h = a.getAttribute('href');
+      var i = h.indexOf('#');
+      if (i > -1) map[h.slice(i + 1)] = a;
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var a = map[e.target.id];
+        if (!a) return;
+        links.forEach(function (l) { l.removeAttribute('aria-current'); });
+        a.setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    secs.forEach(function (s) { io.observe(s); });
+  })();
+</script>
+
+</body>
+</html>
